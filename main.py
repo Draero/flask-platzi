@@ -1,6 +1,5 @@
 from flask import Flask, request, make_response, redirect, render_template, session
 from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
 
 app = Flask(__name__) # Se crea nueva instancia de la clase Flask
 bootstrap = Bootstrap(app)
