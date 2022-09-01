@@ -1,5 +1,5 @@
 from crypt import methods
-from flask import Flask, request, make_response, redirect, render_template, session
+from flask import Flask, request, make_response, redirect, render_template, session, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, SubmitField
@@ -8,8 +8,7 @@ from wtforms.validators import DataRequired
 app = Flask(__name__) # Se crea nueva instancia de la clase Flask
 bootstrap = Bootstrap(app)
 
-app.config.update(PORT = 5000, DEBUG = False, 
-    ENV = 'development', SECRET_KEY = 'SUPER SECRETO'
+app.config.update(PORT = 5000, DEBUG = True, SECRET_KEY = 'SUPER SECRETO'
 )
 todos = ['Comprar café', 'Enviar solicitud de compra', 'Entregar video a productor']
 
@@ -40,11 +39,19 @@ def hello():
     # user_ip = request.cookies.get('user_ip')
     # return 'Hello World Flask, tu IP es {}'.format(user_ip)
     login_form = LoginForm()
+    username = session.get('username')
     context = {
         'user_ip' : user_ip,
         'todos' : todos,
-        'login_form' : login_form
+        'login_form' : login_form,
+        'username' : username
     }
+
+    if login_form.validate_on_submit():
+        username = login_form.username.data
+        session['username'] = username
+        return redirect(url_for('index'))
+
     return render_template('hello.html', **context)
 
 if __name__ == '__main__': # Para correr el servido r flask con debug
