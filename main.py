@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Flask, request, make_response, redirect, render_template, session
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
@@ -33,7 +34,7 @@ def index ():
     # response.set_cookie('user_ip', user_ip)
     return response
 
-@app.route('/hello')
+@app.route('/hello', methods=['GET', 'POST'])
 def hello():
     user_ip = session.get('user_ip')
     # user_ip = request.cookies.get('user_ip')
