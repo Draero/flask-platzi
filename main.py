@@ -1,22 +1,12 @@
 from crypt import methods
-from flask import Flask, request, make_response, redirect, render_template, session, url_for, flash
-from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
+from flask import request, make_response, redirect, render_template, session, url_for, flash
 import unittest
 
-app = Flask(__name__) # Se crea nueva instancia de la clase Flask
-bootstrap = Bootstrap(app)
+from app import create_app
+from app.forms import LoginForm
 
-app.config.update(PORT = 5000, DEBUG = True, SECRET_KEY = 'SUPER SECRETO'
-)
+app = create_app()
 todos = ['Comprar café', 'Enviar solicitud de compra', 'Entregar video a productor']
-
-class LoginForm(FlaskForm):
-    username = StringField('Nombre de usuario', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Enviar')
 
 @app.cli.command()
 def test():
@@ -62,5 +52,5 @@ def hello():
 
     return render_template('hello.html', **context)
 
-if __name__ == '__main__': # Para correr el servido r flask con debug
+if __name__ == '__main__': # Para correr el servidor flask con debug
     app.run()
