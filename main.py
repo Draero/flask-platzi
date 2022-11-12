@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-from flask import Flask, request, make_response, redirect, render_template, session
-from flask_bootstrap import Bootstrap
-=======
 from crypt import methods
 from flask import request, make_response, redirect, render_template, session, url_for, flash
 import unittest
->>>>>>> app_factory
 
 from app import create_app
 from app.forms import LoginForm
